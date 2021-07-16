@@ -1,0 +1,49 @@
+.modal {
+  position: absolute;
+  right: -246px;
+  top: 0;
+  width: 240px;
+  height: 104px;
+  opacity: 0;
+  transform: scale(0);
+  transition: 1s all;
+  z-index: 111;
+  background: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+.confirm {
+  margin: 12px 16px 12px 40px;
+  font-size: 14px;
+  width: 180px;
+  white-space: pre-wrap;
+  position: relative;
+  text-align: left;
+}
+.confirm::after {
+  content: "!";
+  display: block;
+  width: 14px;
+  height: 14px;
+  left: -23px;
+  top: 3px;
+  position: absolute;
+  background: #faad14;
+  color: white;
+  line-height: 16px;
+  font-size: 10px;
+  border-radius: 50%;
+  text-align: center;
+}
+.buttons {
+  position: absolute;
+  bottom: 13px;
+  right: 16px;
+}
+.yesBtn {
+  margin-left: 8px;
+}
