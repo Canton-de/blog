@@ -5,6 +5,7 @@ import Article from '../article/Article';
 import styles from './articles.module.scss';
 import Loader from '../loader/Loader';
 import Api from '../../api/api';
+import Monthes from '../../config';
 
 interface IAuthor {
   username: string;
@@ -21,21 +22,6 @@ export interface IArticle {
   favoritesCount: number;
   favorited: boolean;
 }
-
-const Monthes = [
-  'January',
-  'Febrary',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
 
 export const makeDate = (md: string) => {
   const date = new Date(md);
