@@ -1,14 +1,14 @@
-import { Button } from "antd";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { useState } from "react";
-import * as styles from "./change-profile.module.scss";
-import { yupResolver } from "@hookform/resolvers/yup";
-import Api from "../../api/api";
-import { useHistory } from "react-router-dom";
-import { loadUserData } from "../../store/reducers/userReducer";
-import { useDispatch } from "react-redux";
-import unregisterPage from "../hocs/unregisterPage";
+import { Button } from 'antd';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import React, { useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import * as styles from './change-profile.module.scss';
+import Api from '../../api/api';
+import { loadCurUserProfile } from '../../store/reducers/userReducer';
+import unregisterPage from '../hocs/unregisterPage';
 
 export interface ChangeProfileProps {}
 
@@ -19,16 +19,12 @@ interface IForm {
   image: string;
 }
 
-const ChangeSchema = yup.lazy((value) =>
-  yup.object().shape({
-    username: yup.string().min(4).max(20),
-    email: yup.string().email(),
-    password: yup.string().min(8).max(40),
-    image: yup.string().url(),
-  })
-);
-
-type FormKey = keyof IForm;
+const ChangeSchema = yup.object().shape({
+  username: yup.string().min(4).max(20),
+  email: yup.string().email(),
+  password: yup.string().min(8).max(40),
+  image: yup.string().url(),
+});
 
 const api = new Api();
 
@@ -42,28 +38,22 @@ const ChangeProfile: React.FC<ChangeProfileProps> = () => {
       setIsLoading(true);
       setIsFailed(false);
       const newData: any = {};
-      for (let i in data) {
+      for (const i in data) {
         if (data[i]) newData[i] = data[i];
       }
       await api.updateUser(newData);
-      dispatch(loadUserData());
-      history.push("/");
+      dispatch(loadCurUserProfile());
+      history.push('/articles/page/1');
     } catch (err) {
-      console.log(err);
-      console.log(err.response);
       setIsFailed(true);
       setIsLoading(false);
     }
   };
   const {
     handleSubmit,
-    reset,
     formState: { errors },
     register,
-  } = useForm<IForm>({
-    resolver: yupResolver(ChangeSchema),
-  });
-  console.log(errors);
+  } = useForm<IForm>({ mode: 'all', resolver: yupResolver(ChangeSchema) });
   return (
     <form onSubmit={handleSubmit((data) => onSubmit(data))}>
       <div className={styles.pageWrapper}>
@@ -77,9 +67,9 @@ const ChangeProfile: React.FC<ChangeProfileProps> = () => {
             type="text"
             className={styles.input}
             placeholder="Username"
-            {...register("username")}
+            {...register('username')}
           />
-          {<p>{errors.username?.message}</p>}
+          <p>{errors.username?.message}</p>
           <label htmlFor="email" className={styles.subtitle}>
             Email address
           </label>
@@ -88,9 +78,9 @@ const ChangeProfile: React.FC<ChangeProfileProps> = () => {
             id="email"
             type="text"
             placeholder="Email address"
-            {...register("email")}
+            {...register('email')}
           />
-          {<p>{errors.email?.message}</p>}
+          <p>{errors.email?.message}</p>
           <label htmlFor="password" className={styles.subtitle}>
             New Password
           </label>
@@ -99,9 +89,9 @@ const ChangeProfile: React.FC<ChangeProfileProps> = () => {
             type="password"
             className={styles.input}
             placeholder="New Password"
-            {...register("password")}
+            {...register('password')}
           />
-          {<p>{errors.password?.message}</p>}
+          <p>{errors.password?.message}</p>
           <label htmlFor="avatar" className={styles.subtitle}>
             Avatar image (url)
           </label>
@@ -110,15 +100,10 @@ const ChangeProfile: React.FC<ChangeProfileProps> = () => {
             type="text"
             className={styles.input}
             placeholder="Avatar image"
-            {...register("image")}
+            {...register('image')}
           />
-          {<p>{errors.image?.message}</p>}
-          <Button
-            disabled={isLoading}
-            htmlType="submit"
-            type="primary"
-            style={{ width: "100%" }}
-          >
+          <p>{errors.image?.message}</p>
+          <Button disabled={isLoading} htmlType="submit" type="primary" style={{ width: '100%' }}>
             Save
           </Button>
           {isFailed ? <div>Произошла ошибка.</div> : null}

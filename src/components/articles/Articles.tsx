@@ -1,11 +1,10 @@
-import styles from "./articles.module.scss";
-import Article from "../article/Article";
-import ArticlePage from "../article-page/ArticlePage";
-import { Pagination } from "antd";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { Redirect, useHistory, useParams } from "react-router-dom";
-import Loader from "../loader/Loader";
+import { Pagination } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import Article from '../article/Article';
+import styles from './articles.module.scss';
+import Loader from '../loader/Loader';
+import Api from '../../api/api';
 
 interface IAuthor {
   username: string;
@@ -23,25 +22,23 @@ export interface IArticle {
   favorited: boolean;
 }
 
-interface IArticles {
-  articles: IArticle[];
-}
-
 const Monthes = [
-  "January",
-  "Febrary",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
+  'January',
+  'Febrary',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];
 
-export interface ArticlesProps {}
-
-export const makeDate = (d: string) => {
-  const date = new Date(d);
+export const makeDate = (md: string) => {
+  const date = new Date(md);
   return `${Monthes[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
 };
 
@@ -49,75 +46,52 @@ interface IParams {
   page: string;
 }
 
-const Articles: React.FC<ArticlesProps> = () => {
+const api = new Api();
+
+const Articles = () => {
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState(false);
-  const page = useParams<IParams>().page;
+  const { page } = useParams<IParams>();
   const [articles, setArticles] = useState<IArticle[]>([]);
-  const [isLogged, setIslogged] = useState(false);
   const history = useHistory();
-  const loadArticles = async (p: number = 1) => {
+  const loadArticles = async (lPage = 1) => {
     setIsFetching(true);
     try {
-      const token = localStorage.getItem("token");
-      let data;
-      if (token) {
-        setIslogged(true);
-        data = await axios.get<IArticles>(
-          `https://conduit.productionready.io/api/articles?limit=10&offset=${
-            (p - 1) * 10
-          }`,
-          {
-            headers: {
-              Authorization: `Token ${token}`,
-            },
-          }
-        );
-      } else {
-        data = await axios.get<IArticles>(
-          `https://conduit.productionready.io/api/articles?limit=10&offset=${
-            (p - 1) * 10
-          }`
-        );
-      }
-      console.log(data.data.articles);
+      const lArticles = await api.getArticles(lPage);
       setIsFetching(false);
-      setArticles(data.data.articles);
+      setArticles(lArticles);
     } catch (err) {
       setError(err);
       setIsFetching(false);
       setArticles([]);
     }
   };
-  const changePage = (p: number) => history.push(`/articless/${p}`);
+  const changePage = (pg: number) => history.push(`/articles/page/${pg}`);
   useEffect(() => {
     loadArticles(+page);
   }, [page]);
   if (error) return <div>ОШИБКА</div>;
   return (
-    <div className={styles["articles-wrapper"]}>
+    <div className={styles['articles-wrapper']}>
       {isFetching ? (
         <Loader />
       ) : (
-        articles.map((article) => {
-          return (
-            <Article
-              date={makeDate(article.createdAt)}
-              author={article.author}
-              text={article.description}
-              slug={article.slug}
-              tags={article.tagList}
-              key={article.slug}
-              likesCount={article.favoritesCount}
-              favorited={article.favorited}
-              isLogged={isLogged}
-            />
-          );
-        })
+        articles.map((article) => (
+          <Article
+            date={makeDate(article.createdAt)}
+            author={article.author}
+            text={article.description}
+            slug={article.slug}
+            tags={article.tagList}
+            key={article.slug}
+            likesCount={article.favoritesCount}
+            favorited={article.favorited}
+          />
+        ))
       )}
 
       <Pagination
-        current={+page}
+        current={page ? +page : 1}
         onChange={changePage}
         defaultCurrent={1}
         total={500}

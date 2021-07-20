@@ -1,0 +1,18 @@
+.likeCount {
+  font-size: 12px;
+}
+.heart {
+  color: tomato;
+  margin-right: 5px;
+}
+.likeCheckbox {
+  opacity: 0;
+  display: inline-block;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+.likeLabel {
+  margin-left: 15px;
+  cursor: pointer;
+}
