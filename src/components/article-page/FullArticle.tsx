@@ -4,11 +4,12 @@ import { Button } from 'antd';
 import { useSelector } from 'react-redux';
 import styles from './full-article.module.scss';
 import avatar from '../../img/avatar.png';
-import { IArticle, makeDate } from '../articles/Articles';
+import { IArticle } from '../articles/Articles';
 import Loader from '../loader/Loader';
 import Api from '../../api/api';
 import Modal from '../modal/Modal';
 import LikeButton from '../like-button/LikeButton';
+import makeDate from '../../helpers/makeDate';
 
 const api = new Api();
 

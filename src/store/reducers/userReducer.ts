@@ -1,4 +1,4 @@
-import Api from '../../api/api';
+import { SET_USER, UNLOG_USER, USER_PROFILE_LOADING } from '../types/userTypes';
 
 interface IUserState {
   username: string;
@@ -16,12 +16,6 @@ const initialState = {
   isRegistrationLoading: false,
   email: null,
 };
-
-const SET_USER = 'SET_USER';
-const USER_PROFILE_LOADING = 'USER_PROFILE_LOADING';
-const UNLOG_USER = 'UNLOG_USER';
-
-const api = new Api();
 
 const userReducer = (state = initialState, action: any): IUserState => {
   switch (action.type) {
@@ -47,21 +41,6 @@ const userReducer = (state = initialState, action: any): IUserState => {
     default:
       return state;
   }
-};
-
-const userProfileLoading = () => ({ type: USER_PROFILE_LOADING });
-
-const setUserProfile = (data: any) => ({
-  type: SET_USER,
-  data,
-});
-
-export const unlogginUser = () => ({ type: UNLOG_USER });
-
-export const loadCurUserProfile = () => async (dispatch: any) => {
-  dispatch(userProfileLoading());
-  const userData = await api.getUserData();
-  dispatch(setUserProfile(userData));
 };
 
 export default userReducer;

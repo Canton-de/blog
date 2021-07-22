@@ -3,10 +3,10 @@ import { useHistory, useLocation } from 'react-router';
 import React, { useState, useEffect } from 'react';
 import { HeartFilled, HeartOutlined } from '@ant-design/icons';
 import isLogged from '../../helpers/islogged';
-import { savePathname } from '../../store/reducers/historyReducer';
 import styles from './like-button.module.scss';
 import debounce from '../../helpers/debounce';
 import Api from '../../api/api';
+import savePathname from '../../store/actions/historyActions';
 
 const api = new Api();
 

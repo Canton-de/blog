@@ -7,8 +7,8 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as styles from './change-profile.module.scss';
 import Api from '../../api/api';
-import { loadCurUserProfile } from '../../store/reducers/userReducer';
 import unregisterPage from '../hocs/unregisterPage';
+import { loadCurUserProfile } from '../../store/actions/userActions';
 
 export interface ChangeProfileProps {}
 
@@ -20,9 +20,9 @@ interface IForm {
 }
 
 const ChangeSchema = yup.object().shape({
-  username: yup.string().min(4).max(20),
-  email: yup.string().email(),
-  password: yup.string().min(8).max(40),
+  username: yup.string().required(),
+  email: yup.string().email().required(),
+  password: yup.string().min(6).max(40),
   image: yup.string().url(),
 });
 
@@ -69,7 +69,7 @@ const ChangeProfile: React.FC<ChangeProfileProps> = () => {
             placeholder="Username"
             {...register('username')}
           />
-          <p>{errors.username?.message}</p>
+          <p className={styles.error}>{errors.username?.message}</p>
           <label htmlFor="email" className={styles.subtitle}>
             Email address
           </label>
@@ -80,7 +80,7 @@ const ChangeProfile: React.FC<ChangeProfileProps> = () => {
             placeholder="Email address"
             {...register('email')}
           />
-          <p>{errors.email?.message}</p>
+          <p className={styles.error}>{errors.email?.message}</p>
           <label htmlFor="password" className={styles.subtitle}>
             New Password
           </label>
@@ -91,7 +91,7 @@ const ChangeProfile: React.FC<ChangeProfileProps> = () => {
             placeholder="New Password"
             {...register('password')}
           />
-          <p>{errors.password?.message}</p>
+          <p className={styles.error}>{errors.password?.message}</p>
           <label htmlFor="avatar" className={styles.subtitle}>
             Avatar image (url)
           </label>
@@ -102,7 +102,7 @@ const ChangeProfile: React.FC<ChangeProfileProps> = () => {
             placeholder="Avatar image"
             {...register('image')}
           />
-          <p>{errors.image?.message}</p>
+          <p className={styles.error}>{errors.image?.message}</p>
           <Button disabled={isLoading} htmlType="submit" type="primary" style={{ width: '100%' }}>
             Save
           </Button>

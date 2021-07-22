@@ -1,4 +1,4 @@
-const SAVE_PATHNAME = 'SAVE_PATHNAME';
+import SAVE_PATHNAME from '../types/historyTypes';
 
 interface IHistoryState {
   savedPathname: string;
@@ -16,10 +16,5 @@ const historyReducer = (state = initialState, action: any): IHistoryState => {
       return state;
   }
 };
-
-export const savePathname = (pathname: string) => ({
-  type: SAVE_PATHNAME,
-  pathname,
-});
 
 export default historyReducer;

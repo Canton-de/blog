@@ -1,20 +1,14 @@
-import Api from '../../api/api';
-import { loadCurUserProfile } from './userReducer';
+import { LOGIN_FAILED, USER_LOGGINING } from '../types/loginTypes';
 
 interface ILoginState {
   isLoggining: boolean;
   loginFailed: boolean;
 }
 
-const api = new Api();
-
 const initialState: ILoginState = {
   isLoggining: false,
   loginFailed: false,
 };
-
-const USER_LOGGINING = 'USER_LOGGINING';
-const LOGIN_FAILED = 'LOGIN_FAILED';
 
 const loginReducer = (state = initialState, action: any): ILoginState => {
   switch (action.type) {
@@ -27,23 +21,4 @@ const loginReducer = (state = initialState, action: any): ILoginState => {
   }
 };
 
-export const toggleUserIsLoggining = (isLoggining: boolean) => ({
-  type: USER_LOGGINING,
-  isLoggining,
-});
-
-const loginFailed = () => ({ type: LOGIN_FAILED });
-
-export const logInAccount = (data: any) => async (dispatch: any) => {
-  dispatch(toggleUserIsLoggining(true));
-  try {
-    const response = await api.login(data);
-    const { token } = response.data.user;
-    localStorage.setItem('token', token);
-    dispatch(toggleUserIsLoggining(false));
-    dispatch(loadCurUserProfile());
-  } catch (e) {
-    dispatch(loginFailed());
-  }
-};
 export default loginReducer;

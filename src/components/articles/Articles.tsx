@@ -5,7 +5,7 @@ import Article from '../article/Article';
 import styles from './articles.module.scss';
 import Loader from '../loader/Loader';
 import Api from '../../api/api';
-import Monthes from '../../config';
+import makeDate from '../../helpers/makeDate';
 
 interface IAuthor {
   username: string;
@@ -22,11 +22,6 @@ export interface IArticle {
   favoritesCount: number;
   favorited: boolean;
 }
-
-export const makeDate = (md: string) => {
-  const date = new Date(md);
-  return `${Monthes[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
-};
 
 interface IParams {
   page: string;

@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import React from 'react';
 import unregisterPage from '../hocs/unregisterPage';
 import * as styles from './login-page.module.scss';
-import { logInAccount } from '../../store/reducers/loginReducer';
+import logInAccount from '../../store/actions/loginActions';
 
 export interface LoginPageProps {}
 
@@ -24,10 +24,10 @@ const LoginSchema = yup.object().shape({
 const LoginPage: React.FC<LoginPageProps> = () => {
   const dispatch = useDispatch();
   const { isLoggining, loginFailed } = useSelector((state: any) => state.loginReducer);
+  const { isRegistating } = useSelector((state: any) => state.registerReducer);
   const onSubmit = (data: ILoginForm) => {
     dispatch(logInAccount(data));
   };
-
   const {
     handleSubmit,
     register,
@@ -56,7 +56,6 @@ const LoginPage: React.FC<LoginPageProps> = () => {
           <label htmlFor="password" className={styles.subtitle}>
             Password
           </label>
-
           <input
             id="password"
             type="password"
@@ -65,7 +64,12 @@ const LoginPage: React.FC<LoginPageProps> = () => {
             {...register('password')}
           />
           <p className={styles.error}>{errors?.password?.message}</p>
-          <Button disabled={isLoggining} htmlType="submit" type="primary" style={{ width: '100%' }}>
+          <Button
+            disabled={isLoggining || isRegistating}
+            htmlType="submit"
+            type="primary"
+            style={{ width: '100%' }}
+          >
             Login
           </Button>
           {loginFailed ? (

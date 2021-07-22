@@ -1,0 +1,2 @@
+const SAVE_PATHNAME = 'SAVE_PATHNAME';
+export default SAVE_PATHNAME;

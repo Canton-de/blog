@@ -6,7 +6,6 @@ import Articles from '../articles/Articles';
 import Header from '../header/Header';
 import ArticlePage from '../article-page/FullArticle';
 import RegistrationPage from '../registration-page/RegistrationPage';
-import { loadCurUserProfile } from '../../store/reducers/userReducer';
 import LoginPage from '../login-page/LoginPage';
 import LogOut from '../log-out/LogOut';
 import ChangeProfile from '../change-profile/ChangeProfile';
@@ -14,6 +13,7 @@ import CreateArticle from '../create-article/CreateArticle';
 import EditArticle from '../edit-article/EditArticle';
 import isLogged from '../../helpers/islogged';
 import Loader from '../loader/Loader';
+import { loadCurUserProfile } from '../../store/actions/userActions';
 
 export interface ChildProps {
   count: number;

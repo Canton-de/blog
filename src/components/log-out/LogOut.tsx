@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import React, { useEffect } from 'react';
-import { unlogginUser } from '../../store/reducers/userReducer';
+import { unlogginUser } from '../../store/actions/userActions';
 
 export interface LogOutProps {}
 

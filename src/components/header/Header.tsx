@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 import * as styles from './header.module.scss';
 import avatar from '../../img/avatar.png';
-import { savePathname } from '../../store/reducers/historyReducer';
+import savePathname from '../../store/actions/historyActions';
 
 export interface HeaderProps {}
 
