@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import { useForm } from 'react-hook-form';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -19,7 +19,7 @@ interface ITag {
   value: string;
 }
 
-interface params {
+interface IParams {
   slug: string;
 }
 
@@ -32,22 +32,27 @@ const ArticleSchema = yup.object().shape({
 });
 
 const EditArticle: React.FC = () => {
-  const { slug } = useParams<params>();
+  const { slug } = useParams<IParams>();
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const history = useHistory();
 
   const [tags, setTags] = useState<ITag[]>([]);
+
   const [inputValue, setInputValue] = useState('');
+
   const {
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
   } = useForm<IFormCreateArticle>({
     mode: 'all',
     resolver: yupResolver(ArticleSchema),
   });
+
   const deleteTag = (id: string) => setTags((tags2) => tags2.filter((tag) => tag.id !== id));
+
   const addTag = () => {
     if (inputValue.trim()) {
       setTags((tags2) => [
@@ -60,15 +65,29 @@ const EditArticle: React.FC = () => {
     }
     setInputValue('');
   };
+
   const changeTag = (tagInput: React.ChangeEvent<HTMLInputElement>, id: string) => {
     setTags((tags2) =>
       tags2.map((tag) => (tag.id === id ? { id, value: tagInput.target.value } : tag))
     );
   };
+
   const onInputChange = (input: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(input.target.value);
   };
-  if (error) return <div>{error}</div>;
+
+  useEffect(() => {
+    api.getFullArticle(slug).then((response) => {
+      setValue('title', response.data.article.title);
+      setValue('description', response.data.article.description);
+      setValue('body', response.data.article.body as string);
+      setTags((tags2) => [
+        ...tags2,
+        ...response.data.article.tagList.map((tag) => ({ value: tag, id: tag })),
+      ]);
+    });
+  }, []);
+
   const onSubmit = async (data: IFormCreateArticle) => {
     setIsFetching(true);
     try {
@@ -79,6 +98,7 @@ const EditArticle: React.FC = () => {
       setIsFetching(false);
     }
   };
+  if (error) return <div>{error}</div>;
   return (
     <form onSubmit={handleSubmit((data) => onSubmit(data))}>
       <div className={styles.pageWrapper}>

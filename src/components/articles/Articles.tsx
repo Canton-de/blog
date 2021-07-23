@@ -17,6 +17,7 @@ export interface IArticle {
   description: string;
   createdAt: string;
   slug: string;
+  title: string;
   tagList: string[];
   body?: string;
   favoritesCount: number;
@@ -62,6 +63,7 @@ const Articles = () => {
             date={makeDate(article.createdAt)}
             author={article.author}
             text={article.description}
+            title={article.title}
             slug={article.slug}
             tags={article.tagList}
             key={article.slug}

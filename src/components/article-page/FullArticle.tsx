@@ -2,6 +2,7 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { Button } from 'antd';
 import { useSelector } from 'react-redux';
+import ReactMarkdown from 'react-markdown';
 import styles from './full-article.module.scss';
 import avatar from '../../img/avatar.png';
 import { IArticle } from '../articles/Articles';
@@ -69,7 +70,7 @@ const FullArticle: React.FC<FullArticleProps> = () => {
           <div className={styles.articleHeader}>
             <div className={styles.left}>
               <div>
-                <span className={styles.title}>{article?.slug}</span>
+                <span className={styles.title}>{article?.title}</span>
                 <LikeButton
                   slug={slug}
                   startIsLiked={startIsLiked}
@@ -112,7 +113,9 @@ const FullArticle: React.FC<FullArticleProps> = () => {
             </div>
           </div>
 
-          <div className={styles.body}>{article?.body}</div>
+          <div className={styles.body}>
+            <ReactMarkdown>{article?.body || ''}</ReactMarkdown>
+          </div>
         </div>
       )}
     </div>

@@ -11,8 +11,9 @@ interface IAuthor {
 
 export interface ArticleProps {
   text: string;
-  slug: string;
+  title: string;
   favorited: boolean;
+  slug: string;
   author: IAuthor;
   date: string;
   tags: string[];
@@ -23,16 +24,17 @@ const Article: React.FC<ArticleProps> = ({
   text,
   favorited,
   author,
-  slug,
+  title,
   date,
   tags,
   likesCount,
+  slug,
 }: ArticleProps) => (
   <div className={styles.article}>
     <div className={styles.left}>
       <div>
         <Link to={`/articles/${slug}/`} className={styles.link}>
-          <span className={styles.title}>{slug}</span>
+          <span className={styles.title}>{title}</span>
         </Link>
         <LikeButton slug={slug} startIsLiked={favorited} startLikesCount={likesCount} />
       </div>

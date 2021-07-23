@@ -123,7 +123,8 @@ export default class Api {
     });
   };
 
-  public login = async (data: any) => axiosInstance.post<any, IResponseUser>('users/login', {
+  public login = async (data: any) =>
+    axiosInstance.post<any, IResponseUser>('users/login', {
       user: {
         email: data.email,
         password: data.password,
