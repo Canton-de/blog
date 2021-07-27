@@ -6,7 +6,8 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Api from '../../api/api';
 import * as styles from './edit-article.module.scss';
-import unregisterPage from '../hocs/unregisterPage';
+import authRequired from '../hocs/authRequired';
+import Loader from '../loader/Loader';
 
 export interface IFormCreateArticle {
   title: string;
@@ -36,6 +37,7 @@ const EditArticle: React.FC = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(true);
 
   const [tags, setTags] = useState<ITag[]>([]);
 
@@ -85,6 +87,7 @@ const EditArticle: React.FC = () => {
         ...tags2,
         ...response.data.article.tagList.map((tag) => ({ value: tag, id: tag })),
       ]);
+      setIsLoading(false);
     });
   }, []);
 
@@ -98,6 +101,7 @@ const EditArticle: React.FC = () => {
       setIsFetching(false);
     }
   };
+  if (isLoading) return <Loader />;
   if (error) return <div>{error}</div>;
   return (
     <form onSubmit={handleSubmit((data) => onSubmit(data))}>
@@ -167,4 +171,4 @@ const EditArticle: React.FC = () => {
   );
 };
 
-export default unregisterPage(EditArticle, false);
+export default authRequired(EditArticle);

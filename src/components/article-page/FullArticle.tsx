@@ -30,7 +30,7 @@ const FullArticle: React.FC<FullArticleProps> = () => {
   const history = useHistory();
   const [modalOpen, setModalOpen] = useState(false);
   const [startLikesCount, setStartLikesCount] = useState(0);
-  const [startIsLiked, setStartIsIsLiked] = useState(false);
+  const [startIsLiked, setStartIsLiked] = useState(false);
   const deleteArticle = async () => {
     setIsArticleDeleting(true);
     try {
@@ -50,7 +50,7 @@ const FullArticle: React.FC<FullArticleProps> = () => {
         setIsArticleFetching(false);
         setArticle(lArticle);
         setStartLikesCount(lArticle.favoritesCount);
-        setStartIsIsLiked(lArticle.favorited);
+        setStartIsLiked(lArticle.favorited);
       } catch (err) {
         setArticleError(err.message);
         setIsArticleFetching(false);
@@ -60,9 +60,9 @@ const FullArticle: React.FC<FullArticleProps> = () => {
   }, [slug]);
   if (articleError) return <div>error</div>;
   return (
-    <div style={{ marginBottom: '20px' }}>
+    <div>
       {isArticleFetching ? (
-        <div style={{ margin: '0 auto', textAlign: 'center' }}>
+        <div className={styles.loader}>
           <Loader />
         </div>
       ) : (
@@ -78,7 +78,9 @@ const FullArticle: React.FC<FullArticleProps> = () => {
                 />
               </div>
               {article?.tagList.map((tag) => (
-                <div className={styles.tag}>{tag}</div>
+                <div className={styles.tag} key={tag}>
+                  {tag}
+                </div>
               ))}
               <div className={styles.subtitle}>{article?.description}</div>
             </div>

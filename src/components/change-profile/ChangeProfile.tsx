@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as styles from './change-profile.module.scss';
 import Api from '../../api/api';
-import unregisterPage from '../hocs/unregisterPage';
+import authRequired from '../hocs/authRequired';
 import { loadCurUserProfile } from '../../store/actions/userActions';
 
 export interface ChangeProfileProps {}
@@ -113,4 +113,4 @@ const ChangeProfile: React.FC<ChangeProfileProps> = () => {
   );
 };
 
-export default unregisterPage(ChangeProfile, false);
+export default authRequired(ChangeProfile);

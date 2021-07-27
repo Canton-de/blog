@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Api from '../../api/api';
 import * as styles from './create-article.module.scss';
-import unregisterPage from '../hocs/unregisterPage';
+import authRequired from '../hocs/authRequired';
 
 export interface IFormCreateArticle {
   title: string;
@@ -139,4 +139,4 @@ const CreateArticle: React.FC = () => {
   );
 };
 
-export default unregisterPage(CreateArticle, false);
+export default authRequired(CreateArticle);

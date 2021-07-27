@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import React from 'react';
-import unregisterPage from '../hocs/unregisterPage';
+import noAuthRequired from '../hocs/noAuthRequired';
 import * as styles from './login-page.module.scss';
 import logInAccount from '../../store/actions/loginActions';
 
@@ -84,4 +84,4 @@ const LoginPage: React.FC<LoginPageProps> = () => {
   );
 };
 
-export default unregisterPage(LoginPage, true);
+export default noAuthRequired(LoginPage);

@@ -47,8 +47,7 @@
   margin-right: 10px;
 }
 .area {
-  height: 50px;
-  resize: none;
+  min-height: 100px;
 }
 .error {
   color: red;

@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
-import unregisterPage from '../hocs/unregisterPage';
+import noAuthRequired from '../hocs/noAuthRequired';
 
 import * as styles from './registration-page.module.scss';
 import registerAccount from '../../store/actions/registerActions';
@@ -114,4 +114,4 @@ const RegistrationPage: React.FC = () => {
   );
 };
 
-export default unregisterPage(RegistrationPage, true);
+export default noAuthRequired(RegistrationPage);
