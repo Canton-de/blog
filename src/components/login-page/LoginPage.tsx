@@ -70,7 +70,7 @@ const LoginPage: React.FC<LoginPageProps> = () => {
             type="primary"
             style={{ width: '100%' }}
           >
-            Login
+            {isLoggining ? 'Logining...' : 'Login'}
           </Button>
           {loginFailed ? (
             <div className={styles.error}>Проверьте логин и пароль на правильность.</div>

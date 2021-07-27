@@ -106,7 +106,7 @@ const RegistrationPage: React.FC = () => {
             type="primary"
             style={{ width: '100%' }}
           >
-            Create
+            {isRegistating ? 'Creating...' : 'Create'}
           </Button>
         </div>
       </div>
