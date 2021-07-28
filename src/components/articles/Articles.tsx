@@ -4,7 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import Article from '../article/Article';
 import styles from './articles.module.scss';
 import Loader from '../loader/Loader';
-import Api from '../../api/api';
+import api from '../../api/api';
 import makeDate from '../../helpers/makeDate';
 
 interface IAuthor {
@@ -27,8 +27,6 @@ export interface IArticle {
 interface IParams {
   page: string;
 }
-
-const api = new Api();
 
 const Articles = () => {
   const [isFetching, setIsFetching] = useState(true);

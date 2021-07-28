@@ -1,8 +1,6 @@
-import Api from '../../api/api';
+import api from '../../api/api';
 import { SET_SERVER_ERRORS, USER_REGISTRATING } from '../types/registerTypes';
 import { loadCurUserProfile } from './userActions';
-
-const api = new Api();
 
 const toggleUserIsRegistrating = (isRegistating: boolean) => ({
   type: USER_REGISTRATING,

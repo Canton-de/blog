@@ -1,7 +1,5 @@
-import Api from '../../api/api';
+import api from '../../api/api';
 import { SET_USER, UNLOG_USER, USER_PROFILE_LOADING } from '../types/userTypes';
-
-const api = new Api();
 
 const userProfileLoading = () => ({ type: USER_PROFILE_LOADING });
 

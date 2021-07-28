@@ -29,7 +29,7 @@ const axiosInstance = axios.create({
   baseURL: 'https://conduit.productionready.io/api/',
 });
 
-export default class Api {
+class Api {
   baseUrl = 'https://conduit.productionready.io/api';
 
   public register = async (data: IUserForm) => {
@@ -159,3 +159,5 @@ export default class Api {
     return data;
   };
 }
+
+export default new Api();

@@ -1,8 +1,6 @@
-import Api from '../../api/api';
+import api from '../../api/api';
 import { LOGIN_FAILED, USER_LOGGINING } from '../types/loginTypes';
 import { loadCurUserProfile } from './userActions';
-
-const api = new Api();
 
 const toggleUserIsLoggining = (isLoggining: boolean) => ({
   type: USER_LOGGINING,

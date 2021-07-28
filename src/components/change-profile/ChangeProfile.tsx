@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as styles from './change-profile.module.scss';
-import Api from '../../api/api';
+import api from '../../api/api';
 import authRequired from '../hocs/authRequired';
 import { loadCurUserProfile } from '../../store/actions/userActions';
 
@@ -25,8 +25,6 @@ const ChangeSchema = yup.object().shape({
   password: yup.string().min(6).max(40),
   image: yup.string().url(),
 });
-
-const api = new Api();
 
 const ChangeProfile: React.FC<ChangeProfileProps> = () => {
   const [isLoading, setIsLoading] = useState(false);

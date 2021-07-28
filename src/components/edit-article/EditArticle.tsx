@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Api from '../../api/api';
+import api from '../../api/api';
 import * as styles from './edit-article.module.scss';
 import authRequired from '../hocs/authRequired';
 import Loader from '../loader/Loader';
@@ -23,8 +23,6 @@ interface ITag {
 interface IParams {
   slug: string;
 }
-
-const api = new Api();
 
 const ArticleSchema = yup.object().shape({
   title: yup.string().required(),
