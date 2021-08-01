@@ -10,7 +10,7 @@ const LogOut: React.FC<LogOutProps> = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     history.go(-1);
-    localStorage.setItem('token', '');
+    localStorage.removeItem('token');
     dispatch(unlogginUser());
   }, []);
   return <div>unloginning...</div>;

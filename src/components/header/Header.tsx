@@ -26,7 +26,7 @@ const Header: React.FC<HeaderProps> = () => {
       <div className={styles.right}>
         {!isLoggedIn ? (
           <>
-            <Button className={`${styles.button}`} onClick={onLogin}>
+            <Button className={styles.button} onClick={onLogin}>
               Sign In
             </Button>
             <NavLink to="/sign-up" activeClassName={styles.link}>
