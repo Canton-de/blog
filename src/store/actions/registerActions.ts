@@ -2,12 +2,25 @@ import api from '../../api/api';
 import { SET_SERVER_ERRORS, USER_REGISTRATING } from '../types/registerTypes';
 import { loadCurUserProfile } from './userActions';
 
-const toggleUserIsRegistrating = (isRegistating: boolean) => ({
+type toggleUserIsRegistratingActionType = {
+  type: typeof USER_REGISTRATING;
+  isRegistrating: boolean;
+};
+
+const toggleUserIsRegistrating = (isRegistrating: boolean): toggleUserIsRegistratingActionType => ({
   type: USER_REGISTRATING,
-  isRegistating,
+  isRegistrating,
 });
 
-const setServerErrors = (errors: string) => ({ type: SET_SERVER_ERRORS, errors });
+type setServerErrorsActionType = {
+  type: typeof SET_SERVER_ERRORS;
+  errors: string;
+};
+
+const setServerErrors = (errors: string): setServerErrorsActionType => ({
+  type: SET_SERVER_ERRORS,
+  errors,
+});
 
 const registerAccount = (data: any) => async (dispatch: any) => {
   dispatch(toggleUserIsRegistrating(true));

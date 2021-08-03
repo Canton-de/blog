@@ -8,6 +8,7 @@ import noAuthRequired from '../hocs/noAuthRequired';
 
 import * as styles from './registration-page.module.scss';
 import registerAccount from '../../store/actions/registerActions';
+import { stateType } from '../../store/store';
 
 export interface IUserForm {
   username: string;
@@ -26,8 +27,8 @@ const SignupSchema = yup.object().shape({
 });
 
 const RegistrationPage: React.FC = () => {
-  const { isRegistating, serverErrors } = useSelector((state: any) => state.registerReducer);
-  const { isLoggining } = useSelector((state: any) => state.loginReducer);
+  const { isRegistating, serverErrors } = useSelector((state: stateType) => state.register);
+  const { isLoggining } = useSelector((state: stateType) => state.login);
   const dispatch = useDispatch();
   const {
     register,
@@ -46,7 +47,7 @@ const RegistrationPage: React.FC = () => {
             Username
           </label>
           <input
-            className={serverErrors.username || errors.username ? styles.inputError : styles.input}
+            className={serverErrors?.username || errors.username ? styles.inputError : styles.input}
             type="text"
             id="username"
             placeholder="Username"
@@ -60,7 +61,7 @@ const RegistrationPage: React.FC = () => {
             Email address
           </label>
           <input
-            className={serverErrors.email || errors.email ? styles.inputError : styles.input}
+            className={serverErrors?.email || errors.email ? styles.inputError : styles.input}
             id="email"
             type="text"
             {...register('email')}
@@ -74,7 +75,7 @@ const RegistrationPage: React.FC = () => {
             Password
           </label>
           <input
-            className={serverErrors.password || errors.password ? styles.inputError : styles.input}
+            className={serverErrors?.password || errors.password ? styles.inputError : styles.input}
             id="password"
             type="password"
             {...register('password')}
@@ -82,7 +83,7 @@ const RegistrationPage: React.FC = () => {
           />
           <p className={styles.error}>
             {errors.password?.message}
-            {serverErrors.password?.join(', ')}
+            {serverErrors?.password?.join(', ')}
           </p>
           <label htmlFor="repeatPassword" className={styles.subtitle}>
             Repeat password

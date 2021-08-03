@@ -14,6 +14,7 @@ import EditArticle from '../edit-article/EditArticle';
 import isLogged from '../../helpers/islogged';
 import Loader from '../loader/Loader';
 import { loadCurUserProfile } from '../../store/actions/userActions';
+import { stateType } from '../../store/store';
 
 export interface ChildProps {
   count: number;
@@ -21,32 +22,34 @@ export interface ChildProps {
 
 function App() {
   const dispatch = useDispatch();
-  const isUserProfileLoading = useSelector((state: any) => state.userReducer.isUserProfileLoading);
+  const isUserProfileLoading = useSelector((state: stateType) => state.user.isUserProfileLoading);
+  const error = useSelector((state: stateType) => state.user.error);
   useEffect(() => {
     if (!isLogged()) return;
     dispatch(loadCurUserProfile());
   }, []);
   return (
     <div className="App">
-      {isUserProfileLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <Header />
-          <Switch>
-            <Route path="/" exact component={Articles} />
-            <Route path="/articles/page/:page" exact component={Articles} />
-            <Route path="/articles/:slug" exact component={ArticlePage} />
-            <Route path="/articles/:slug/edit" component={EditArticle} />
-            <Route path="/sign-up" component={RegistrationPage} />
-            <Route path="/sign-in" component={LoginPage} />
-            <Route path="/log-out" component={LogOut} />
-            <Route path="/profile" component={ChangeProfile} />
-            <Route path="/new-article" component={CreateArticle} />
-            <div className="not-found">404 Page not found</div>
-          </Switch>
-        </>
-      )}
+      {error ||
+        (isUserProfileLoading ? (
+          <Loader />
+        ) : (
+          <>
+            <Header />
+            <Switch>
+              <Route path="/" exact component={Articles} />
+              <Route path="/articles/page/:page" exact component={Articles} />
+              <Route path="/articles/:slug" exact component={ArticlePage} />
+              <Route path="/articles/:slug/edit" component={EditArticle} />
+              <Route path="/sign-up" component={RegistrationPage} />
+              <Route path="/sign-in" component={LoginPage} />
+              <Route path="/log-out" component={LogOut} />
+              <Route path="/profile" component={ChangeProfile} />
+              <Route path="/new-article" component={CreateArticle} />
+              <div className="not-found">404 Page not found</div>
+            </Switch>
+          </>
+        ))}
     </div>
   );
 }

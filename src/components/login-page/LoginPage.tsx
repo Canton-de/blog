@@ -8,8 +8,7 @@ import React from 'react';
 import noAuthRequired from '../hocs/noAuthRequired';
 import * as styles from './login-page.module.scss';
 import logInAccount from '../../store/actions/loginActions';
-
-export interface LoginPageProps {}
+import { stateType } from '../../store/store';
 
 interface ILoginForm {
   email: string;
@@ -21,10 +20,10 @@ const LoginSchema = yup.object().shape({
   password: yup.string().required(),
 });
 
-const LoginPage: React.FC<LoginPageProps> = () => {
+const LoginPage: React.FC = () => {
   const dispatch = useDispatch();
-  const { isLoggining, loginFailed } = useSelector((state: any) => state.loginReducer);
-  const { isRegistating } = useSelector((state: any) => state.registerReducer);
+  const { isLoggining, loginFailed } = useSelector((state: stateType) => state.login);
+  const { isRegistating } = useSelector((state: stateType) => state.register);
   const onSubmit = (data: ILoginForm) => {
     dispatch(logInAccount(data));
   };

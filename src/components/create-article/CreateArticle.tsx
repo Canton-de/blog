@@ -25,7 +25,7 @@ const ArticleSchema = yup.object().shape({
   body: yup.string().required('text is required filed'),
 });
 
-const CreateArticle: React.FC = () => {
+const CreateArticle = () => {
   const [isFetching, setIsFetching] = useState(false);
   const history = useHistory();
   const [tags, setTags] = useState<ITag[]>([]);

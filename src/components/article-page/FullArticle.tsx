@@ -11,20 +11,20 @@ import api from '../../api/api';
 import Modal from '../modal/Modal';
 import LikeButton from '../like-button/LikeButton';
 import makeDate from '../../helpers/makeDate';
+import { stateType } from '../../store/store';
 
-interface FullArticleProps {}
 interface IParams {
   slug: string;
 }
 
-const FullArticle: React.FC<FullArticleProps> = () => {
+const FullArticle = () => {
   const { slug } = useParams<IParams>();
   const [isArticleFetching, setIsArticleFetching] = useState(true);
   const [isArticleDeleting, setIsArticleDeleting] = useState(false);
   const [articleError, setArticleError] = useState(null);
   const [article, setArticle] = useState<IArticle | null>(null);
 
-  const currentUserUsername = useSelector((state: any) => state.userReducer.username);
+  const { username } = useSelector((state: stateType) => state.user);
   const history = useHistory();
   const [modalOpen, setModalOpen] = useState(false);
   const [startLikesCount, setStartLikesCount] = useState(0);
@@ -88,7 +88,7 @@ const FullArticle: React.FC<FullArticleProps> = () => {
                 <div className={styles.date}>{makeDate(article?.createdAt as string)}</div>
                 <img src={article?.author.image || avatar} alt="avatar" className={styles.avatar} />
               </div>
-              {currentUserUsername !== article?.author.username ? null : (
+              {username !== article?.author.username ? null : (
                 <div className={styles.btnBlock}>
                   <Button danger disabled={isArticleDeleting} onClick={() => setModalOpen(true)}>
                     Delete

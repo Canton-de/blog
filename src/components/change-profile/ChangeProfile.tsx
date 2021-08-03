@@ -10,8 +10,6 @@ import api from '../../api/api';
 import authRequired from '../hocs/authRequired';
 import { loadCurUserProfile } from '../../store/actions/userActions';
 
-export interface ChangeProfileProps {}
-
 interface IForm {
   username: string;
   email: string;
@@ -26,7 +24,7 @@ const ChangeSchema = yup.object().shape({
   image: yup.string().url(),
 });
 
-const ChangeProfile: React.FC<ChangeProfileProps> = () => {
+const ChangeProfile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const history = useHistory();

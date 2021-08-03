@@ -3,9 +3,7 @@ import { useHistory } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { unlogginUser } from '../../store/actions/userActions';
 
-export interface LogOutProps {}
-
-const LogOut: React.FC<LogOutProps> = () => {
+const LogOut: React.FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {

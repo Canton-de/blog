@@ -22,11 +22,7 @@ interface ILikeButton {
   startIsLiked: boolean;
 }
 
-const LikeButton: React.FC<ILikeButton> = ({
-  slug,
-  startLikesCount,
-  startIsLiked,
-}: ILikeButton) => {
+const LikeButton: React.FC<ILikeButton> = ({ slug, startLikesCount, startIsLiked }) => {
   const [isLiked, setIsLiked] = useState(startIsLiked);
   const [curLikesCount, setCurLikesCount] = useState(startLikesCount);
   const { pathname } = useLocation();

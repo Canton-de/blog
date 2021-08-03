@@ -8,11 +8,10 @@ import React from 'react';
 import * as styles from './header.module.scss';
 import avatar from '../../img/avatar.png';
 import savePathname from '../../store/actions/historyActions';
+import { stateType } from '../../store/store';
 
-export interface HeaderProps {}
-
-const Header: React.FC<HeaderProps> = () => {
-  const { isLoggedIn, username, image } = useSelector((state: any) => state.userReducer);
+const Header: React.FC = () => {
+  const { isLoggedIn, username, image } = useSelector((state: stateType) => state.user);
   const history = useHistory();
   const { pathname } = useLocation();
   const dispatch = useDispatch();

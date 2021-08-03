@@ -1,16 +1,13 @@
 import { LOGIN_FAILED, USER_LOGGINING } from '../types/loginTypes';
 
-interface ILoginState {
-  isLoggining: boolean;
-  loginFailed: boolean;
-}
-
-const initialState: ILoginState = {
+const initialState = {
   isLoggining: false,
   loginFailed: false,
 };
 
-const loginReducer = (state = initialState, action: any): ILoginState => {
+export type loginStateType = typeof initialState;
+
+const loginReducer = (state = initialState, action: any): loginStateType => {
   switch (action.type) {
     case LOGIN_FAILED:
       return { ...state, loginFailed: true, isLoggining: false };

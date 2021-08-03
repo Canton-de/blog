@@ -14,9 +14,17 @@ declare global {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(
-  combineReducers({ userReducer, loginReducer, historyReducer, registerReducer }),
-  composeEnhancers(applyMiddleware(thunk))
-);
+const rootReducer = combineReducers({
+  user: userReducer,
+  login: loginReducer,
+  history: historyReducer,
+  register: registerReducer,
+});
+
+type rootReducerType = typeof rootReducer;
+
+export type stateType = ReturnType<rootReducerType>;
+
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
 export default store;

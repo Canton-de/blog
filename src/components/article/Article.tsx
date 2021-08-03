@@ -29,7 +29,7 @@ const Article: React.FC<ArticleProps> = ({
   tags,
   likesCount,
   slug,
-}: ArticleProps) => (
+}) => (
   <div className={styles.article}>
     <div className={styles.left}>
       <div>

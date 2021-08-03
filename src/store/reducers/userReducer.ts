@@ -1,40 +1,40 @@
-import { SET_USER, UNLOG_USER, USER_PROFILE_LOADING } from '../types/userTypes';
+import { SET_USER, UNLOG_USER, USER_AUTH_FAILED, USER_PROFILE_LOADING } from '../types/userTypes';
 
-interface IUserState {
-  username: string;
-  image: null | string;
-  isLoggedIn: boolean;
-  isUserProfileLoading: boolean;
-  isRegistrationLoading: boolean;
-  email: null | string;
-}
 const initialState = {
-  username: '',
-  image: null,
+  username: null as null | string,
+  image: null as null | string,
   isLoggedIn: false,
   isUserProfileLoading: false,
   isRegistrationLoading: false,
-  email: null,
+  email: null as null | string,
+  error: null as null | string,
 };
 
-const userReducer = (state = initialState, action: any): IUserState => {
+export type userStateType = typeof initialState;
+
+const userReducer = (state = initialState, action: any): userStateType => {
   switch (action.type) {
-    case SET_USER:
+    case SET_USER: {
+      const { userData } = action;
+
       return {
         ...state,
-        username: action.data.username,
-        email: action.data.email,
+        username: userData.username,
+        email: userData.email,
+        image: userData.image,
         isUserProfileLoading: false,
         isLoggedIn: true,
-        image: action.data.image,
       };
+    }
+    case USER_AUTH_FAILED:
+      return { ...state, error: action.error };
     case USER_PROFILE_LOADING:
       return { ...state, isUserProfileLoading: true };
     case UNLOG_USER:
       return {
         ...state,
         isLoggedIn: false,
-        username: '',
+        username: null,
         image: null,
         email: null,
       };

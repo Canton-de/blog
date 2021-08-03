@@ -2,7 +2,12 @@ import api from '../../api/api';
 import { LOGIN_FAILED, USER_LOGGINING } from '../types/loginTypes';
 import { loadCurUserProfile } from './userActions';
 
-const toggleUserIsLoggining = (isLoggining: boolean) => ({
+type toggleUserIsLogginingActionType = {
+  type: typeof USER_LOGGINING;
+  isLoggining: boolean;
+};
+
+const toggleUserIsLoggining = (isLoggining: boolean): toggleUserIsLogginingActionType => ({
   type: USER_LOGGINING,
   isLoggining,
 });

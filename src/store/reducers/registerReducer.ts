@@ -1,16 +1,19 @@
 import { SET_SERVER_ERRORS, USER_REGISTRATING } from '../types/registerTypes';
 
-export interface IRegiseterState {
-  isRegistating: boolean;
-  serverErrors: any;
-}
-
-const initialState: IRegiseterState = {
-  isRegistating: false,
-  serverErrors: {},
+type serverErrorsType = {
+  username?: string[];
+  email?: string[];
+  password?: string[];
 };
 
-const registerReducer = (state = initialState, action: any): IRegiseterState => {
+const initialState = {
+  isRegistating: false,
+  serverErrors: null as null | serverErrorsType,
+};
+
+export type registerStateType = typeof initialState;
+
+const registerReducer = (state = initialState, action: any): registerStateType => {
   switch (action.type) {
     case SET_SERVER_ERRORS:
       return { ...state, serverErrors: action.errors };
