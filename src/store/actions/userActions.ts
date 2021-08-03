@@ -28,7 +28,7 @@ export const unlogginUser = () => ({ type: UNLOG_USER });
 
 export const userAuthFailed = () => ({
   type: USER_AUTH_FAILED,
-  error: 'Ошибка загрузки пользователя',
+  error: 'Ошибка загрузки ',
 });
 
 export const loadCurUserProfile = () => async (dispatch: any) => {
@@ -37,6 +37,7 @@ export const loadCurUserProfile = () => async (dispatch: any) => {
     const userData = await api.getUserData();
     dispatch(setUserProfile(userData));
   } catch (e) {
+    localStorage.removeItem('token');
     dispatch(userAuthFailed());
   }
 };
