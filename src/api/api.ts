@@ -123,8 +123,6 @@ class Api {
     let data;
 
     if (isLogged()) {
-      console.log(authService.authHeader());
-      console.log(12212112);
       data = await axiosInstance.get<IArticles>(`articles?limit=10&offset=${(page - 1) * 10}`, {
         headers: authService.authHeader(),
       });
