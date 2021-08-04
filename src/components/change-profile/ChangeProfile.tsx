@@ -9,13 +9,7 @@ import * as styles from './change-profile.module.scss';
 import api from '../../api/api';
 import authRequired from '../hocs/authRequired';
 import { loadCurUserProfile } from '../../store/actions/userActions';
-
-interface IForm {
-  username: string;
-  email: string;
-  password: string;
-  image: string;
-}
+import { IChangeProfileForm } from '../../models/changeProfileMode';
 
 const ChangeSchema = yup.object().shape({
   username: yup.string().required(),
@@ -29,15 +23,12 @@ const ChangeProfile = () => {
   const [isFailed, setIsFailed] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: IChangeProfileForm) => {
     try {
       setIsLoading(true);
       setIsFailed(false);
-      const newData: any = {};
-      for (const i in data) {
-        if (data[i]) newData[i] = data[i];
-      }
-      await api.updateUser(newData);
+
+      await api.updateUser(data);
       dispatch(loadCurUserProfile());
       history.push('/articles/page/1');
     } catch (err) {
@@ -49,7 +40,7 @@ const ChangeProfile = () => {
     handleSubmit,
     formState: { errors },
     register,
-  } = useForm<IForm>({ mode: 'all', resolver: yupResolver(ChangeSchema) });
+  } = useForm<IChangeProfileForm>({ mode: 'all', resolver: yupResolver(ChangeSchema) });
   return (
     <form onSubmit={handleSubmit((data) => onSubmit(data))}>
       <div className={styles.pageWrapper}>

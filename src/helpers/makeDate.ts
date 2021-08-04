@@ -1,4 +1,4 @@
-import Monthes from '../config';
+import { Monthes } from '../config';
 
 const makeDate = (md: string) => {
   const date = new Date(md);

@@ -1,3 +1,4 @@
+import { loginActionsTypes } from '../actions/loginActions';
 import { LOGIN_FAILED, USER_LOGGINING } from '../types/loginTypes';
 
 const initialState = {
@@ -7,7 +8,7 @@ const initialState = {
 
 export type loginStateType = typeof initialState;
 
-const loginReducer = (state = initialState, action: any): loginStateType => {
+const loginReducer = (state = initialState, action: loginActionsTypes): loginStateType => {
   switch (action.type) {
     case LOGIN_FAILED:
       return { ...state, loginFailed: true, isLoggining: false };

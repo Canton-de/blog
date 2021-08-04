@@ -8,21 +8,9 @@ import api from '../../api/api';
 import * as styles from './edit-article.module.scss';
 import authRequired from '../hocs/authRequired';
 import Loader from '../loader/Loader';
-
-export interface IFormCreateArticle {
-  title: string;
-  description: string;
-  body: string;
-}
-
-interface ITag {
-  id: string;
-  value: string;
-}
-
-interface IParams {
-  slug: string;
-}
+import { IParams } from '../../models/slugParams';
+import { ITag } from '../../models/tagParams';
+import { IFormCreateArticle } from '../../models/editArticleModel';
 
 const ArticleSchema = yup.object().shape({
   title: yup.string().required(),

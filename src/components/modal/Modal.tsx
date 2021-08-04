@@ -1,15 +1,8 @@
-import { Button } from "antd";
-import cn from "classnames";
-import React from "react";
-import styles from "./modal.module.scss";
-
-interface IModal {
-  isVisible: boolean;
-  // eslint-disable-next-line no-unused-vars
-  onHide: (e: React.MouseEvent<HTMLElement>) => void;
-  // eslint-disable-next-line no-unused-vars
-  onDelete: (e: React.MouseEvent<HTMLElement>) => void;
-}
+import { Button } from 'antd';
+import cn from 'classnames';
+import React from 'react';
+import { IModal } from '../../models/modal.model';
+import styles from './modal.module.scss';
 
 const Modal: React.FC<IModal> = ({ isVisible, onHide, onDelete }) => (
   <div className={cn(styles.modal, { [styles.visible]: isVisible })}>

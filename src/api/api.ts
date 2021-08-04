@@ -1,12 +1,17 @@
 import axios from 'axios';
-import { IArticle } from '../components/articles/Articles';
-import { IFormCreateArticle } from '../components/create-article/CreateArticle';
-import { IUserForm } from '../components/registration-page/RegistrationPage';
-import getToken from '../helpers/getToken';
+import { baseUrl } from '../config';
 import isLogged from '../helpers/islogged';
+import authService from '../AuthService';
+import { IArticle } from '../models/articlesModel';
+import { IChangeProfileForm } from '../models/changeProfileMode';
+import { IUserForm } from '../models/registrationPage';
+import { IFormCreateArticle } from '../models/editArticleModel';
 
 interface IReqUser {
   token: string;
+  username: string;
+  email: string;
+  image: string | null;
 }
 
 interface IResDataUser {
@@ -26,42 +31,35 @@ interface IArticles {
 }
 
 const axiosInstance = axios.create({
-  baseURL: 'https://conduit.productionready.io/api/',
+  baseURL: baseUrl,
 });
 
 class Api {
-  baseUrl = 'https://conduit.productionready.io/api';
-
   public register = async (data: IUserForm) => {
-    const response = await axiosInstance.post<any, IResponseUser>(`users`, {
-      user: {
-        ...data,
-      },
+    const response = await axiosInstance.post<IResDataUser>(`users`, {
+      user: data,
     });
-
     return response;
   };
 
   public getUserData = async () => {
-    const { data } = await axiosInstance.get('user', {
+    const response = await axiosInstance.get<IResDataUser>('user', {
       withCredentials: true,
       headers: {
-        Authorization: `Token ${getToken()}`,
+        ...authService.authHeader(),
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',
       },
     });
-    return data.user;
+    return response.data.user;
   };
 
-  public updateUser = async (data: IUserForm) => {
+  public updateUser = async (data: IChangeProfileForm) => {
     await axiosInstance.put(
       `user`,
       { user: { ...data } },
       {
-        headers: {
-          Authorization: `Token ${getToken()}`,
-        },
+        headers: authService.authHeader(),
       }
     );
   };
@@ -71,18 +69,14 @@ class Api {
       `articles`,
       { article: { ...data, tagList: tags } },
       {
-        headers: {
-          Authorization: `Token ${getToken()}`,
-        },
+        headers: authService.authHeader(),
       }
     );
   };
 
   public deleteArticle = async (slug: string) => {
     await axiosInstance.delete(`articles/${slug}`, {
-      headers: {
-        Authorization: `Token ${getToken()}`,
-      },
+      headers: authService.authHeader(),
     });
   };
 
@@ -96,9 +90,7 @@ class Api {
         },
       },
       {
-        headers: {
-          Authorization: `Token ${getToken()}`,
-        },
+        headers: authService.authHeader(),
       }
     );
   };
@@ -108,18 +100,14 @@ class Api {
       `articles/${slug}/favorite`,
       {},
       {
-        headers: {
-          Authorization: `Token ${getToken()}`,
-        },
+        headers: authService.authHeader(),
       }
     );
   };
 
   public unfavoriteArticle = async (slug: string) => {
     await axiosInstance.delete(`articles/${slug}/favorite`, {
-      headers: {
-        Authorization: `Token ${getToken()}`,
-      },
+      headers: authService.authHeader(),
     });
   };
 
@@ -133,15 +121,17 @@ class Api {
 
   public getArticles = async (page: number) => {
     let data;
+
     if (isLogged()) {
+      console.log(authService.authHeader());
+      console.log(12212112);
       data = await axiosInstance.get<IArticles>(`articles?limit=10&offset=${(page - 1) * 10}`, {
-        headers: {
-          Authorization: `Token ${getToken()}`,
-        },
+        headers: authService.authHeader(),
       });
     } else {
       data = await axiosInstance.get<IArticles>(`articles?limit=10&offset=${(page - 1) * 10}`);
     }
+
     return data.data.articles;
   };
 
@@ -149,9 +139,7 @@ class Api {
     let data;
     if (isLogged()) {
       data = await axiosInstance.get<IDataArticle>(`articles/${slug}`, {
-        headers: {
-          Authorization: `Token ${getToken()}`,
-        },
+        headers: authService.authHeader(),
       });
     } else {
       data = await axiosInstance.get<IDataArticle>(`articles/${slug}`);

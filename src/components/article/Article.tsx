@@ -3,11 +3,7 @@ import React from 'react';
 import styles from './article.module.scss';
 import avatar from '../../img/avatar.png';
 import LikeButton from '../like-button/LikeButton';
-
-interface IAuthor {
-  username: string;
-  image: string;
-}
+import { IAuthor } from '../../models/articleModel';
 
 export interface ArticleProps {
   text: string;

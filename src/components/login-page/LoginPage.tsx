@@ -9,11 +9,7 @@ import noAuthRequired from '../hocs/noAuthRequired';
 import * as styles from './login-page.module.scss';
 import logInAccount from '../../store/actions/loginActions';
 import { stateType } from '../../store/store';
-
-interface ILoginForm {
-  email: string;
-  password: string;
-}
+import { ILoginForm } from '../../models/loginPageModel';
 
 const LoginSchema = yup.object().shape({
   email: yup.string().email().required(),
@@ -23,7 +19,7 @@ const LoginSchema = yup.object().shape({
 const LoginPage: React.FC = () => {
   const dispatch = useDispatch();
   const { isLoggining, loginFailed } = useSelector((state: stateType) => state.login);
-  const { isRegistating } = useSelector((state: stateType) => state.register);
+  const { isRegistrating } = useSelector((state: stateType) => state.register);
   const onSubmit = (data: ILoginForm) => {
     dispatch(logInAccount(data));
   };
@@ -64,7 +60,7 @@ const LoginPage: React.FC = () => {
           />
           <p className={styles.error}>{errors?.password?.message}</p>
           <Button
-            disabled={isLoggining || isRegistating}
+            disabled={isLoggining || isRegistrating}
             htmlType="submit"
             type="primary"
             style={{ width: '100%' }}

@@ -7,17 +7,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import api from '../../api/api';
 import * as styles from './create-article.module.scss';
 import authRequired from '../hocs/authRequired';
-
-export interface IFormCreateArticle {
-  title: string;
-  description: string;
-  body: string;
-}
-
-interface ITag {
-  id: string;
-  value: string;
-}
+import { ICreateArticleForm } from '../../models/createArticleModel';
+import { ITag } from '../../models/tagParams';
 
 const ArticleSchema = yup.object().shape({
   title: yup.string().required(),
@@ -34,7 +25,7 @@ const CreateArticle = () => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<IFormCreateArticle>({
+  } = useForm<ICreateArticleForm>({
     mode: 'all',
     resolver: yupResolver(ArticleSchema),
   });
@@ -59,7 +50,7 @@ const CreateArticle = () => {
   const onInputChange = (input: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(input.target.value);
   };
-  const onSubmit = async (data: IFormCreateArticle) => {
+  const onSubmit = async (data: ICreateArticleForm) => {
     setIsFetching(true);
     try {
       await api.createArticle(data, tags.map((tag) => tag.value).reverse());

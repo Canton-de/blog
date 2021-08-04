@@ -9,14 +9,7 @@ import noAuthRequired from '../hocs/noAuthRequired';
 import * as styles from './registration-page.module.scss';
 import registerAccount from '../../store/actions/registerActions';
 import { stateType } from '../../store/store';
-
-export interface IUserForm {
-  username: string;
-  email: string;
-  password: string;
-  repeatPassword: string;
-  checkAgree: boolean;
-}
+import { IUserForm } from '../../models/registrationPage';
 
 const SignupSchema = yup.object().shape({
   username: yup.string().min(3).max(20).required(),
@@ -27,7 +20,7 @@ const SignupSchema = yup.object().shape({
 });
 
 const RegistrationPage: React.FC = () => {
-  const { isRegistating, serverErrors } = useSelector((state: stateType) => state.register);
+  const { isRegistrating, serverErrors } = useSelector((state: stateType) => state.register);
   const { isLoggining } = useSelector((state: stateType) => state.login);
   const dispatch = useDispatch();
   const {
@@ -102,12 +95,12 @@ const RegistrationPage: React.FC = () => {
           </label>
           <p className={styles.error}>{errors.checkAgree?.message}</p>
           <Button
-            disabled={isRegistating || isLoggining}
+            disabled={isRegistrating || isLoggining}
             htmlType="submit"
             type="primary"
             style={{ width: '100%' }}
           >
-            {isRegistating ? 'Creating...' : 'Create'}
+            {isRegistrating ? 'Creating...' : 'Create'}
           </Button>
         </div>
       </div>

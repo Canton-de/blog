@@ -1,3 +1,4 @@
+import { userActionsTypes } from '../actions/userActions';
 import { SET_USER, UNLOG_USER, USER_AUTH_FAILED, USER_PROFILE_LOADING } from '../types/userTypes';
 
 const initialState = {
@@ -12,7 +13,7 @@ const initialState = {
 
 export type userStateType = typeof initialState;
 
-const userReducer = (state = initialState, action: any): userStateType => {
+const userReducer = (state = initialState, action: userActionsTypes): userStateType => {
   switch (action.type) {
     case SET_USER: {
       const { userData } = action;

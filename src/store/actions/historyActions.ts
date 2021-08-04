@@ -5,6 +5,8 @@ type savePathnameActionType = {
   pathname: string;
 };
 
+export type historyActionTypes = savePathnameActionType;
+
 const savePathname = (pathname: string): savePathnameActionType => ({
   type: SAVE_PATHNAME,
   pathname,

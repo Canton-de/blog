@@ -6,32 +6,12 @@ import styles from './articles.module.scss';
 import Loader from '../loader/Loader';
 import api from '../../api/api';
 import makeDate from '../../helpers/makeDate';
-
-interface IAuthor {
-  username: string;
-  image: string;
-}
-
-export interface IArticle {
-  author: IAuthor;
-  description: string;
-  createdAt: string;
-  slug: string;
-  title: string;
-  tagList: string[];
-  body?: string;
-  favoritesCount: number;
-  favorited: boolean;
-}
-
-interface IParams {
-  page: string;
-}
+import { IArciclesParams, IArticle } from '../../models/articlesModel';
 
 const Articles = () => {
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState(false);
-  const { page } = useParams<IParams>();
+  const { page } = useParams<IArciclesParams>();
   const [articles, setArticles] = useState<IArticle[]>([]);
   const history = useHistory();
   const loadArticles = async (lPage = 1) => {
@@ -48,9 +28,11 @@ const Articles = () => {
   };
   const changePage = (pg: number) => history.push(`/articles/page/${pg}`);
   useEffect(() => {
-    loadArticles(+page);
+    loadArticles(+(page || 1));
   }, [page]);
-  if (error) return <div>ОШИБКА</div>;
+  if (error) {
+    return <div>ОШИБКА</div>;
+  }
   return (
     <div className={styles['articles-wrapper']}>
       {isFetching ? (

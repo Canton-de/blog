@@ -4,8 +4,10 @@ import { useSelector } from 'react-redux';
 import isLogged from '../../helpers/islogged';
 import { stateType } from '../../store/store';
 
-const unregisterPage = (Component: any) =>
-  function fo(...props: any) {
+type BaseProps = {};
+
+const unregisterPage = (Component: React.FC<BaseProps>): React.FC =>
+  function AuthReq(props: BaseProps) {
     const history = useHistory();
     const { savedPathname } = useSelector((state: stateType) => state.history);
 

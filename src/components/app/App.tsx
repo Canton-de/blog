@@ -1,4 +1,4 @@
-import './App.less';
+import './App.css';
 import { Switch, Route } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -15,10 +15,6 @@ import isLogged from '../../helpers/islogged';
 import Loader from '../loader/Loader';
 import { loadCurUserProfile } from '../../store/actions/userActions';
 import { stateType } from '../../store/store';
-
-export interface ChildProps {
-  count: number;
-}
 
 function App() {
   const dispatch = useDispatch();

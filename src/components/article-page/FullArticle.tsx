@@ -5,17 +5,14 @@ import { useSelector } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import styles from './full-article.module.scss';
 import avatar from '../../img/avatar.png';
-import { IArticle } from '../articles/Articles';
 import Loader from '../loader/Loader';
 import api from '../../api/api';
 import Modal from '../modal/Modal';
 import LikeButton from '../like-button/LikeButton';
 import makeDate from '../../helpers/makeDate';
 import { stateType } from '../../store/store';
-
-interface IParams {
-  slug: string;
-}
+import { IParams } from '../../models/slugParams';
+import { IArticle } from '../../models/articlesModel';
 
 const FullArticle = () => {
   const { slug } = useParams<IParams>();

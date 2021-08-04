@@ -1,0 +1,13 @@
+@import '~antd/dist/antd.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+body {
+  font-size: 18px;
+  font-family: 'Inter', sans-serif;
+  min-height: 110vh;
+  background: #ebeef3;
+}
+.not-found {
+  color: red;
+  text-align: center;
+  font-size: 28px;
+}

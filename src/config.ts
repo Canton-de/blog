@@ -1,4 +1,4 @@
-const Monthes = [
+export const Monthes = [
   'January',
   'Febrary',
   'March',
@@ -12,4 +12,4 @@ const Monthes = [
   'November',
   'December',
 ];
-export default Monthes;
+export const baseUrl = 'https://conduit.productionready.io/api/';
