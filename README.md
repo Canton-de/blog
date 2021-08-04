@@ -1,1 +1,1 @@
-# https://blog-bcn7d6y16-churshukovanton-gmailcom.vercel.app/
+# https://blog-q97a1h6ok-churshukovanton-gmailcom.vercel.app/
